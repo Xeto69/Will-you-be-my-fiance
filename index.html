@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Fiance?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        img {
+            max-width: 200px;
+            height: auto;
+            margin: 20px 0;
+        }
+        .button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .yes {
+            background-color: #ff4b4b;
+            color: white;
+        }
+        .no {
+            background-color: #555555;
+            color: white;
+        }
+        #response {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Do you love me?</h1>
+    <img src="Bear.png" alt="Cute bear image">
+    
+    <div>
+        <button class="button yes" onclick="loveResponse(true)">❤️ Yes</button>
+        <button class="button no" onclick="loveResponse(false)">💔 No</button>
+    </div>
+
+    <p id="response"></p>
+
+    <script>
+        function loveResponse(answer) {
+            var response = document.getElementById("response");
+            if (answer) {
+                response.textContent = "I love you too! ❤️";
+            } else {
+                response.textContent = "Aww, that's sad. 💔";
+            }
+        }
+    </script>
+</body>
+</html>
