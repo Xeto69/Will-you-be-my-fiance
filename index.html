@@ -64,7 +64,7 @@
         }
 
         .book-cover {
-            background-image: url('Love Cover.jpg');
+            background-image: url('Love_Cover_High_Quality.jpg'); /* Use a higher quality cover image */
             background-color: #ffffff;
             border-right: 1px solid #e0e0e0;
             transform-origin: left;
@@ -289,7 +289,7 @@
             for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle', 'burning-heart');
-                particle.innerHTML = "🔥❤️";
+                particle.innerHTML = "🔥";
                 particle.style.left = `${x + Math.random() * 50 - 25}px`;
                 particle.style.top = `${y + Math.random() * 50 - 25}px`;
                 document.body.appendChild(particle);
