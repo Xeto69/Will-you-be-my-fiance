@@ -225,6 +225,29 @@
         .burning-heart {
             font-size: 20px; /* Adjust size of burning heart emoji */
         }
+
+        /* Heart bubble styling */
+        .heart-bubble {
+            position: absolute;
+            bottom: 80px; /* Position above the text */
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            background-color: pink;
+            color: red;
+            font-size: 1.5em;
+            text-align: center;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: float 2s infinite;
+            visibility: hidden; /* Hidden initially */
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+            100% { transform: translateX(-50%) translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -238,6 +261,7 @@
             <!-- Text above the bear image -->
             <div>
                 <h2>Will you be My Fiancée?</h2>
+                <div class="heart-bubble">❤️</div> <!-- Heart bubble -->
             </div>
             <!-- Panda Container with the bear image -->
             <div class="panda-container">
@@ -268,50 +292,42 @@
         function loveResponse(answer, event) {
             event.stopPropagation(); // Prevent click event from bubbling to the book
             var responseDiv = document.getElementById("response");
-            var bubble = document.createElement('div');
-            bubble.classList.add('speech-bubble');
+            var heartBubble = document.querySelector(".heart-bubble");
+            heartBubble.style.visibility = "visible"; // Show heart bubble
 
             if (answer) {
-                bubble.textContent = "Yay! I love you a lot, My Fiancée! ❤️";
-                createParticles(event.clientX, event.clientY, 'heart');
+                responseDiv.innerHTML = "<h2 class='burning-heart'>Yay! ❤️ I'm so happy!</h2>";
+                heartBubble.innerHTML = "💖"; // Change to burning heart on "Yes"
             } else {
-                bubble.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
-                createParticles(event.clientX, event.clientY, 'burning-heart');
+                responseDiv.innerHTML = "<h2>Oh no... 💔 Maybe next time!</h2>";
+                heartBubble.innerHTML = "😢"; // Change to sad face on "No"
             }
 
-            // Clear previous response and append the speech bubble to the response div
-            responseDiv.innerHTML = ''; // Clear previous response
-            responseDiv.appendChild(bubble);
-            bubble.style.visibility = 'visible'; // Make bubble visible
-
-            // Position the bubble to fit inside the book
-            bubble.style.bottom = `40px`; // Adjusted bottom position
+            // Particle effect
+            createParticles(event.clientX, event.clientY);
         }
 
-        function createParticles(x, y, type) {
-            const particleCount = 30;
-            const particleSymbol = type === 'heart' ? "❤️" : "🔥❤️";
-            for (let i = 0; i < particleCount; i++) {
-                createParticle(x, y, particleSymbol);
+        function createParticles(x, y) {
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.backgroundColor = 'pink'; // Color of particles
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.opacity = 1;
+                particle.style.transform = `translate(-50%, -50%)`;
+                document.body.appendChild(particle);
+
+                // Random animation delay and size
+                particle.style.animationDelay = `${Math.random() * 0.5}s`;
+                particle.style.width = `${Math.random() * 10 + 5}px`; // Random width
+                particle.style.height = `${Math.random() * 10 + 5}px`; // Random height
+
+                // Remove particle after animation
+                particle.addEventListener('animationend', () => {
+                    particle.remove();
+                });
             }
-        }
-
-        function createParticle(x, y, symbol) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.innerHTML = symbol;
-            document.body.appendChild(particle);
-            const randomX = Math.random() * 20 - 10; // Random horizontal offset
-            const randomDuration = Math.random() * 0.5 + 0.5; // Random duration between 0.5s and 1s
-
-            particle.style.left = `${x + randomX}px`;
-            particle.style.top = `${y}px`;
-            particle.style.animationDuration = `${randomDuration}s`;
-
-            // Remove particle after animation
-            particle.addEventListener('animationend', () => {
-                particle.remove();
-            });
         }
     </script>
 </body>
