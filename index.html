@@ -10,6 +10,7 @@
             text-align: center;
             background-color: #f0f0f0;
             padding: 50px;
+            overflow: hidden; /* Prevent scrolling due to particles */
         }
 
         /* Book container */
@@ -184,6 +185,40 @@
             transform: scale(0.95);
         }
 
+        /* Particle effects */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 1;
+            animation: disappear 3s forwards;
+        }
+
+        @keyframes disappear {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        /* Heart particle */
+        .heart {
+            background-color: red;
+            width: 15px;
+            height: 15px;
+        }
+
+        /* Fire particle */
+        .fire {
+            background-color: orange;
+            width: 15px;
+            height: 15px;
+        }
+
         /* Media query for mobile responsiveness */
         @media (max-width: 600px) {
             .panda {
@@ -229,10 +264,32 @@
             var response = document.getElementById("response");
             if (answer) {
                 response.textContent = "Yay! I love you a lot My Fiancée! ❤️";
+                createParticles(event.clientX, event.clientY, 'heart');
             } else {
                 response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
+                createParticles(event.clientX, event.clientY, 'fire');
             }
         }
-    </script>
-</body>
-</html>
+
+        function createParticles(x, y, type) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle', type);
+            document.body.appendChild(particle);
+
+            // Position the particle
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+
+            // Randomize particle movement
+            const movementX = (Math.random() - 0.5) * 50; // Random horizontal movement
+            const movementY = (Math.random() - 0.5) * 50; // Random vertical movement
+            particle.animate([
+                { transform: `translate(0, 0)` },
+                { transform: `translate(${movementX}px, ${movementY}px)` }
+            ], {
+                duration: 3000,
+                easing: 'ease-in-out'
+            });
+
+            // Remove particle after animation
+            particle.addEventListener('animation
