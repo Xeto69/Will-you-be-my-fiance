@@ -225,29 +225,6 @@
         .burning-heart {
             font-size: 20px; /* Adjust size of burning heart emoji */
         }
-
-        /* Heart bubble styling */
-        .heart-bubble {
-            position: absolute;
-            bottom: 80px; /* Position above the text */
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px;
-            background-color: pink;
-            color: red;
-            font-size: 1.5em;
-            text-align: center;
-            border-radius: 50px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            animation: float 2s infinite;
-            visibility: hidden; /* Hidden initially */
-        }
-
-        @keyframes float {
-            0% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-            100% { transform: translateX(-50%) translateY(0); }
-        }
     </style>
 </head>
 <body>
@@ -261,7 +238,6 @@
             <!-- Text above the bear image -->
             <div>
                 <h2>Will you be My Fiancée?</h2>
-                <div class="heart-bubble">❤️</div> <!-- Heart bubble -->
             </div>
             <!-- Panda Container with the bear image -->
             <div class="panda-container">
@@ -281,49 +257,58 @@
         // Toggle book opening effect
         document.getElementById("book").addEventListener("click", function() {
             this.classList.toggle("open");
+            if (!this.classList.contains("open")) {
+                clearResponse(); // Clear response when closing the book
+            }
         });
 
         document.getElementById("book").addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
                 this.classList.toggle("open");
+                if (!this.classList.contains("open")) {
+                    clearResponse(); // Clear response when closing the book
+                }
             }
         });
 
-        function loveResponse(answer, event) {
-            event.stopPropagation(); // Prevent click event from bubbling to the book
+        function clearResponse() {
             var responseDiv = document.getElementById("response");
-            var heartBubble = document.querySelector(".heart-bubble");
-            heartBubble.style.visibility = "visible"; // Show heart bubble
-
-            if (answer) {
-                responseDiv.innerHTML = "<h2 class='burning-heart'>Yay! ❤️ I'm so happy!</h2>";
-                heartBubble.innerHTML = "💖"; // Change to burning heart on "Yes"
-            } else {
-                responseDiv.innerHTML = "<h2>Oh no... 💔 Maybe next time!</h2>";
-                heartBubble.innerHTML = "😢"; // Change to sad face on "No"
-            }
-
-            // Particle effect
-            createParticles(event.clientX, event.clientY);
+            responseDiv.innerHTML = ''; // Clear previous response
         }
 
-        function createParticles(x, y) {
-            for (let i = 0; i < 30; i++) {
+        function loveResponse(answer, event) {
+            const responseDiv = document.getElementById("response");
+            const bubble = document.createElement("div");
+            bubble.classList.add("speech-bubble");
+
+            if (answer) {
+                bubble.innerHTML = "Yay! I'm so happy! 💖";
+            } else {
+                bubble.innerHTML = "Oh no! Why not? 😢";
+            }
+
+            responseDiv.innerHTML = ''; // Clear previous response
+            responseDiv.appendChild(bubble);
+            bubble.style.visibility = 'visible'; // Show the bubble
+
+            // Create particles
+            createParticles(event);
+        }
+
+        function createParticles(event) {
+            const particleCount = 30; // Number of particles to create
+            const container = document.querySelector('.book-inner');
+
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.backgroundColor = 'pink'; // Color of particles
-                particle.style.left = `${x}px`;
-                particle.style.top = `${y}px`;
-                particle.style.opacity = 1;
-                particle.style.transform = `translate(-50%, -50%)`;
-                document.body.appendChild(particle);
+                particle.className = 'particle heart'; // Use heart class for particles
+                particle.style.left = `${event.clientX - container.offsetLeft}px`;
+                particle.style.top = `${event.clientY - container.offsetTop}px`;
+                particle.style.animationDelay = `${Math.random() * 0.5}s`; // Random delay for effect
+                particle.innerHTML = '❤️'; // Heart emoji for particles
+                container.appendChild(particle);
 
-                // Random animation delay and size
-                particle.style.animationDelay = `${Math.random() * 0.5}s`;
-                particle.style.width = `${Math.random() * 10 + 5}px`; // Random width
-                particle.style.height = `${Math.random() * 10 + 5}px`; // Random height
-
-                // Remove particle after animation
+                // Remove the particle after animation
                 particle.addEventListener('animationend', () => {
                     particle.remove();
                 });
