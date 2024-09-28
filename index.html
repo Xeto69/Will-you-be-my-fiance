@@ -98,7 +98,7 @@
         }
 
         .book.open .book-inner {
-            display: block;
+            display: block; /* Show inner content when open */
         }
 
         /* Panda animation */
@@ -137,6 +137,7 @@
             max-width: 90%; /* Limit bubble width */
             margin-top: 10px; /* Spacing below buttons */
             visibility: hidden; /* Hidden initially */
+            position: relative; /* Position relative to allow triangle positioning */
         }
 
         /* Triangle for speech bubble tail */
@@ -291,31 +292,6 @@
                 bubble.style.visibility = 'hidden'; // Hide the bubble after 3 seconds
             }, 3000);
         }
-
-        // Particle effect for hearts
-        const createParticle = (x, y) => {
-            const particle = document.createElement('div');
-            particle.classList.add('particle', 'heart');
-            particle.innerHTML = '❤️'; // Use heart emoji
-            particle.style.left = `${x}px`;
-            particle.style.top = `${y}px`;
-            document.body.appendChild(particle);
-
-            // Remove particle after animation ends
-            particle.addEventListener('animationend', () => {
-                particle.remove();
-            });
-        };
-
-        // Listen for heart clicks
-        document.querySelectorAll('.yes').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const rect = button.getBoundingClientRect();
-                const x = rect.left + rect.width / 2;
-                const y = rect.top;
-                createParticle(x, y);
-            });
-        });
     </script>
 </body>
 </html>
