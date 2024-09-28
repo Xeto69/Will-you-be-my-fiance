@@ -127,6 +127,7 @@
         /* Speech bubble styling */
         .speech-bubble {
             position: absolute;
+            bottom: 20px; /* Adjusted position inside the book */
             left: 50%;
             transform: translateX(-50%);
             display: inline-block;
@@ -139,6 +140,7 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 90%; /* Limit bubble width */
             z-index: 1; /* Ensure bubble is on top */
+            visibility: hidden; /* Hidden initially */
         }
 
         /* Triangle for speech bubble tail */
@@ -181,13 +183,6 @@
 
         .no:hover {
             background-color: #333333;
-        }
-
-        #response {
-            font-size: 1.5em;
-            margin-top: 20px;
-            color: #333;
-            position: relative; /* Required for positioning bubble */
         }
 
         /* Scale effect for buttons */
@@ -273,56 +268,47 @@
         function loveResponse(answer, event) {
             event.stopPropagation(); // Prevent click event from bubbling to the book
             var responseDiv = document.getElementById("response");
-            responseDiv.innerHTML = ''; // Clear previous response
-            
             var bubble = document.createElement('div');
             bubble.classList.add('speech-bubble');
-
-            // Calculate book position to avoid overlap
-            const bookRect = document.getElementById('book').getBoundingClientRect();
-            const bubbleOffset = 10; // Space between bubble and book
-
-            // Set the top position of the bubble
-            let bubbleTop = bookRect.top - bubble.offsetHeight - bubbleOffset;
 
             if (answer) {
                 bubble.textContent = "Yay! I love you a lot, My Fiancée! ❤️";
                 createParticles(event.clientX, event.clientY, 'heart');
             } else {
-                bubble.textContent = "Oh no! That's okay, we can still be friends! 💔";
+                bubble.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
                 createParticles(event.clientX, event.clientY, 'burning-heart');
             }
 
-            // Set position of the bubble
-            bubble.style.top = `${bubbleTop}px`;
-            bubble.style.left = `${bookRect.left + (bookRect.width / 2)}px`; // Center it above the book
+            // Clear previous response and append the speech bubble to the response div
+            responseDiv.innerHTML = ''; // Clear previous response
             responseDiv.appendChild(bubble);
+            bubble.style.visibility = 'visible'; // Make bubble visible
+
+            // Position the bubble to fit inside the book
+            bubble.style.bottom = `60px`; // Adjusted bottom position
         }
 
         function createParticles(x, y, type) {
-            const particleCount = 30; // Number of particles to create
+            const particleCount = 30;
+            const particleSymbol = type === 'heart' ? "❤️" : "🔥❤️";
             for (let i = 0; i < particleCount; i++) {
-                createParticle(x, y, type);
+                createParticle(x, y, particleSymbol);
             }
         }
 
-        function createParticle(x, y, type) {
+        function createParticle(x, y, symbol) {
             const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.left = `${x}px`;
-            particle.style.top = `${y}px`;
-            particle.innerHTML = type === 'heart' ? '❤️' : '🔥'; // Choose emoji based on type
+            particle.className = 'particle';
+            particle.innerHTML = symbol;
             document.body.appendChild(particle);
+            const randomX = Math.random() * 20 - 10; // Random horizontal offset
+            const randomDuration = Math.random() * 0.5 + 0.5; // Random duration between 0.5s and 1s
 
-            // Randomize particle direction and animation duration
-            const angle = Math.random() * 2 * Math.PI; // Random angle in radians
-            const distance = Math.random() * 50 + 30; // Random distance from the center
-            const duration = Math.random() * 0.5 + 0.5; // Random duration between 0.5 and 1 second
+            particle.style.left = `${x + randomX}px`;
+            particle.style.top = `${y}px`;
+            particle.style.animationDuration = `${randomDuration}s`;
 
-            particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-            particle.style.animationDuration = `${duration}s`;
-
-            // Remove the particle after animation ends
+            // Remove particle after animation
             particle.addEventListener('animationend', () => {
                 particle.remove();
             });
