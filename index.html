@@ -9,22 +9,22 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             background-color: #f0f0f0;
-            padding: 20px; /* Reduced padding for smaller screens */
-            margin: 0; /* Remove default margin */
-            overflow: hidden; /* Prevent scrolling when particles are generated */
-            display: flex; /* Enable Flexbox */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: 100vh; /* Full viewport height */
+            padding: 20px;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         /* Book container */
         .book {
             position: relative;
-            width: 90%; /* Responsive width */
-            max-width: 300px; /* Maximum width for larger screens */
-            height: auto; /* Auto height */
-            aspect-ratio: 3 / 4; /* Maintain aspect ratio */
+            width: 90%;
+            max-width: 300px;
+            height: auto;
+            aspect-ratio: 3 / 4;
             margin: 0 auto;
             perspective: 1500px;
             background: url('book-background.jpg') no-repeat center center;
@@ -120,7 +120,7 @@
 
         /* Panda image styling */
         .panda {
-            max-width: 50%; /* Responsive size */
+            max-width: 50%;
             height: auto;
         }
 
@@ -135,7 +135,7 @@
             padding: 10px;
             background-color: #ff6f6f;
             color: white;
-            font-size: 1em; /* Responsive font size */
+            font-size: 1em;
             text-align: center;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -154,14 +154,14 @@
         }
 
         .button {
-            font-size: 1em; /* Responsive font size */
-            padding: 12px 20px; /* Padding for touch devices */
+            font-size: 1em;
+            padding: 12px 20px;
             margin: 10px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            width: 80%; /* Responsive button size */
+            width: 80%;
         }
 
         .yes {
@@ -196,22 +196,21 @@
         /* Media query for mobile responsiveness */
         @media (max-width: 600px) {
             .panda {
-                max-width: 80%; /* Larger size for panda on small screens */
+                max-width: 80%;
             }
             .panda-container::after {
-                width: 70%; /* Responsive width for speech bubble */
-                font-size: 0.9em; /* Smaller font for small screens */
+                width: 70%;
+                font-size: 0.9em;
             }
         }
 
         /* Particle Styles */
         .particle {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
+            width: 20px;
+            height: 20px;
             pointer-events: none;
-            opacity: 0;
+            opacity: 1;
             animation: particle-animation 1s forwards;
         }
 
@@ -223,15 +222,11 @@
         }
 
         .heart {
-            background-color: red;
-            /* Heart shape */
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            font-size: 20px; /* Adjust size of heart emoji */
         }
 
-        .fire {
-            background-color: orange;
-            /* Fire shape (using a triangular shape) */
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        .sad {
+            font-size: 20px; /* Adjust size of sad emoji */
         }
     </style>
 </head>
@@ -268,20 +263,35 @@
             var response = document.getElementById("response");
             if (answer) {
                 response.textContent = "Yay! I love you a lot, My Fiancée! ❤️";
-                createParticles(event.clientX, event.clientY, 'heart');
+                createHeartParticles(event.clientX, event.clientY);
             } else {
                 response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
-                createParticles(event.clientX, event.clientY, 'fire');
+                createSadParticles(event.clientX, event.clientY);
             }
         }
 
-        function createParticles(x, y, type) {
-            for (let i = 0; i < 20; i++) {
+        function createHeartParticles(x, y) {
+            for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.left = `${x + Math.random() * 30 - 15}px`;
-                particle.style.top = `${y + Math.random() * 30 - 15}px`;
-                particle.style.backgroundColor = type === 'heart' ? 'red' : 'orange';
+                particle.classList.add('particle', 'heart');
+                particle.innerHTML = "❤️";
+                particle.style.left = `${x + Math.random() * 50 - 25}px`;
+                particle.style.top = `${y + Math.random() * 50 - 25}px`;
+                document.body.appendChild(particle);
+                // Remove particle after animation
+                setTimeout(() => {
+                    particle.remove();
+                }, 1000);
+            }
+        }
+
+        function createSadParticles(x, y) {
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle', 'sad');
+                particle.innerHTML = "😢";
+                particle.style.left = `${x + Math.random() * 50 - 25}px`;
+                particle.style.top = `${y + Math.random() * 50 - 25}px`;
                 document.body.appendChild(particle);
                 // Remove particle after animation
                 setTimeout(() => {
