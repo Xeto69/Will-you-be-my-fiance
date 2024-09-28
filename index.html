@@ -81,7 +81,7 @@
             height: 100%;
             background-color: white;
             text-align: center;
-            padding: 15px; /* Reduced padding to move contents up */
+            padding: 15px; /* Adjusted padding */
             display: none; /* Hidden by default */
             border-radius: 0 5px 5px 0;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -245,18 +245,18 @@
         <div class="book-spine" aria-hidden="true"></div>
         <div class="book-back" aria-hidden="true"></div>
         <div class="book-inner">
-            <!-- Text above the panda image -->
+            <!-- Content moved above the panda image -->
             <div>
                 <h2>Will you be My Fiancée?</h2>
-            </div>
-            <!-- Panda Container with the panda image -->
-            <div class="panda-container">
-                <img src="Bubu.png" alt="Panda Bubu image" class="panda">
-            </div>
+                <!-- Panda Container with the panda image -->
+                <div class="panda-container">
+                    <img src="Bubu.png" alt="Panda Bubu image" class="panda">
+                </div>
 
-            <div>
-                <button class="button yes" onclick="loveResponse(true, event)">❤️ Yes</button>
-                <button class="button no" onclick="loveResponse(false, event)">💔 No</button>
+                <div>
+                    <button class="button yes" onclick="loveResponse(true, event)">❤️ Yes</button>
+                    <button class="button no" onclick="loveResponse(false, event)">💔 No</button>
+                </div>
             </div>
 
             <!-- Speech bubble -->
@@ -287,33 +287,9 @@
             } else {
                 bubble.textContent = "That's not okay, you should say YES! You're all just MINE!";
             }
-            bubble.style.visibility = 'visible'; // Make the bubble visible
-            setTimeout(() => {
-                bubble.style.visibility = 'hidden'; // Hide after 5 seconds
-            }, 5000);
+            bubble.style.visibility = "visible";
         }
-
-        // Particle effect
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle heart'; // Add heart class for heart emoji
-            particle.innerHTML = '❤️'; // Heart emoji
-
-            // Randomize initial position
-            particle.style.left = Math.random() * window.innerWidth + 'px';
-            particle.style.bottom = '0px';
-            document.body.appendChild(particle);
-
-            // Animation
-            setTimeout(() => {
-                particle.remove();
-            }, 1000);
-        }
-
-        // Create particles on clicking yes button
-        document.querySelector('.yes').addEventListener('click', function() {
-            createParticle();
-        });
     </script>
+
 </body>
 </html>
