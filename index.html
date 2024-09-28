@@ -10,6 +10,7 @@
             text-align: center;
             background-color: #f0f0f0;
             padding: 50px;
+            overflow: hidden; /* Prevent scrollbars */
         }
 
         /* Book container */
@@ -194,6 +195,44 @@
                 font-size: 1em;
             }
         }
+
+        /* Particle Styles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .heart {
+            background-color: red;
+            animation: heart-animation 0.8s forwards;
+        }
+
+        @keyframes heart-animation {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .fire {
+            background-color: orange;
+            animation: fire-animation 0.8s forwards;
+        }
+
+        @keyframes fire-animation {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -229,10 +268,30 @@
             var response = document.getElementById("response");
             if (answer) {
                 response.textContent = "Yay! I love you a lot My Fiancée! ❤️";
+                createHeartParticle(event);
             } else {
                 response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
+                createFireParticle(event);
             }
         }
-    </script>
-</body>
-</html>
+
+        function createHeartParticle(event) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle', 'heart');
+            document.body.appendChild(particle);
+
+            const x = event.clientX;
+            const y = event.clientY;
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+
+            // Remove particle after animation
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
+        }
+
+        function createFireParticle(event) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle', 'fire');
+            document.body.appendChild(p
