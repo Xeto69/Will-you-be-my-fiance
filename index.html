@@ -31,6 +31,7 @@
             background-size: cover;
             border: 2px solid #8B4513;
             border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         /* Book cover and back */
@@ -47,8 +48,19 @@
             cursor: pointer;
             transform-origin: left;
             transition: transform 1s ease-in-out;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border-radius: 5px;
+        }
+
+        .book-cover {
+            background-image: url('Love Cover.jpg');
+            background-color: #ffffff;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .book-back {
+            background-image: url('book-back.jpg');
+            transform-origin: right;
+            transform: rotateY(0deg);
         }
 
         /* 3D Spine */
@@ -63,19 +75,6 @@
             border-radius: 5px;
         }
 
-        .book-cover {
-            background-image: url('Love Cover.jpg');
-            background-color: #ffffff;
-            border-right: 1px solid #e0e0e0;
-            transform-origin: left;
-        }
-
-        .book-back {
-            background-image: url('book-back.jpg');
-            transform-origin: right;
-            transform: rotateY(0deg);
-        }
-
         /* Inner book content */
         .book-inner {
             position: absolute;
@@ -84,9 +83,9 @@
             background-color: white;
             text-align: center;
             padding: 20px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
             display: none; /* Hidden by default */
             border-radius: 0 5px 5px 0;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
         /* Open animation */
@@ -102,6 +101,7 @@
             display: block;
         }
 
+        /* Panda animation */
         .panda-container {
             position: relative;
             display: inline-block;
@@ -127,7 +127,7 @@
         /* Speech bubble styling */
         .speech-bubble {
             position: absolute;
-            top: -50px; /* Adjusted position */
+            top: -70px; /* Adjusted position for better visibility */
             left: 50%;
             transform: translateX(-50%);
             display: inline-block;
@@ -298,12 +298,35 @@
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 particle.textContent = particleSymbol;
-                particle.style.left = `${x + (Math.random() - 0.5) * 50}px`;
-                particle.style.top = `${y + (Math.random() - 0.5) * 50}px`;
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.fontSize = Math.random() * 15 + 10 + 'px'; // Random size
+                particle.style.opacity = Math.random(); // Random opacity
+
                 document.body.appendChild(particle);
+
+                // Set random direction for each particle
+                const direction = Math.random() * 360;
+                const distance = Math.random() * 100 + 50;
+                const xMovement = Math.cos(direction) * distance;
+                const yMovement = Math.sin(direction) * distance;
+
+                particle.animate(
+                    [
+                        { transform: `translate(0, 0)` },
+                        { transform: `translate(${xMovement}px, ${yMovement}px)` }
+                    ],
+                    {
+                        duration: 1000,
+                        easing: 'ease-out',
+                        fill: 'forwards'
+                    }
+                );
+
+                // Remove the particle after animation
                 setTimeout(() => {
                     particle.remove();
-                }, 1000); // Remove particle after animation
+                }, 1000);
             }
         }
     </script>
