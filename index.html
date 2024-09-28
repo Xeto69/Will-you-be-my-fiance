@@ -43,7 +43,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2em;
+            font-size: 2em; /* Use rem or em for responsiveness */
             cursor: pointer;
             transform-origin: left;
             transition: transform 1s ease-in-out;
@@ -81,7 +81,7 @@
             height: 100%;
             background-color: white;
             text-align: center;
-            padding: 30px; /* Increased padding for better spacing */
+            padding: 30px;
             display: none; /* Hidden by default */
             border-radius: 0 5px 5px 0;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -188,12 +188,25 @@
 
         /* Media query for mobile responsiveness */
         @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .book {
+                max-width: 90%;
+            }
+            .book-inner {
+                padding: 20px; /* Adjust padding for smaller screens */
+            }
             .panda {
                 max-width: 80%;
             }
             .speech-bubble {
                 width: 70%;
                 font-size: 0.9em;
+            }
+            .button {
+                font-size: 0.9em; /* Adjust button font size */
+                padding: 10px; /* Adjust button padding */
             }
         }
 
@@ -269,41 +282,33 @@
             bubble.innerHTML = ''; // Clear previous response
 
             if (answer) {
-                bubble.textContent = "Yay! I love you a lot, My Fiancée!❤️";
-                createParticles(event.clientX, event.clientY, 'heart');
+                bubble.textContent = "Yay! I love you too!";
             } else {
-                bubble.textContent = "You should say YES! because you'll always just be all MINE❤️";
-                createParticles(event.clientX, event.clientY, 'burning-heart');
+                bubble.textContent = "That's okay, I love you anyway!";
             }
-
-            bubble.style.visibility = 'visible'; // Make bubble visible
+            bubble.style.visibility = 'visible'; // Make the bubble visible
+            setTimeout(() => {
+                bubble.style.visibility = 'hidden'; // Hide the bubble after 3 seconds
+            }, 3000);
         }
 
-        function createParticles(x, y, type) {
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle', type);
-                particle.style.left = `${x}px`;
-                particle.style.top = `${y}px`;
-
-                const emoji = type === 'heart' ? '❤️' : '💔';
-                particle.innerHTML = emoji;
-
-                document.body.appendChild(particle);
-
-                const size = Math.random() * 20 + 10; // Random size
-                particle.style.fontSize = `${size}px`;
-
-                const angle = Math.random() * 360; // Random angle
-                const distance = Math.random() * 100 + 50; // Random distance
-                particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-
-                // Remove the particle after animation ends
-                particle.addEventListener('animationend', () => {
-                    particle.remove();
-                });
-            }
+        // Particle effect
+        function createParticle(event) {
+            const particle = document.createElement('div');
+            particle.className = 'particle heart';
+            particle.style.left = event.clientX + 'px';
+            particle.style.top = event.clientY + 'px';
+            document.body.appendChild(particle);
+            const size = Math.random() * 5 + 5; // Random size
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
         }
+
+        // Event listener for creating particles on mouse click
+        document.addEventListener('click', createParticle);
     </script>
 </body>
 </html>
