@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nothing At All</title>
+    <title>Will You Be My Fiancée?</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -114,54 +114,4 @@
 
         /* Media query for mobile responsiveness */
         @media (max-width: 600px) {
-            h1 {
-                font-size: 1.8em;
-            }
-            .book {
-                width: 100%;
-                height: auto;
-            }
-            img {
-                max-width: 100px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <h1>Will you be my Fiance, [Her Name]?</h1>
-    <div class="book" id="book">
-        <div class="cover">
-            <img src="red rose.png" alt="Red Rose" class="rose">
-        </div>
-        <div class="content" id="content">
-            <img src="Bear.png" alt="Cute bear image">
-            <div>
-                <button class="button yes" onclick="loveResponse(true)">❤️ Yes</button>
-                <button class="button no" onclick="loveResponse(false)">💔 No</button>
-            </div>
-            <p id="response"></p>
-        </div>
-    </div>
-    <button class="open-button" onclick="openBook()">Click to Open the Book</button>
-
-    <script>
-        function openBook() {
-            var book = document.getElementById("book");
-            var content = document.getElementById("content");
-            book.classList.toggle("open");
-            setTimeout(function() {
-                content.classList.add("visible");
-            }, 1000); // delay to match the book opening animation
-        }
-
-        function loveResponse(answer) {
-            var response = document.getElementById("response");
-            if (answer) {
-                response.textContent = "Yay! I love you a lot My Fiance! ❤️";
-            } else {
-                response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
-            }
-        }
-    </script>
-</body>
-</html>
+            h1
