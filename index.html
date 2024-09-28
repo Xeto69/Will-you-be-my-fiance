@@ -236,7 +236,11 @@
         <div class="book-spine"></div>
         <div class="book-back"></div>
         <div class="book-inner">
-            <!-- Panda Container with the speech bubble inside the book -->
+            <!-- Text above the bear image -->
+            <div>
+                <h2>Will you be My Fiancée?</h2>
+            </div>
+            <!-- Panda Container with the bear image -->
             <div class="panda-container">
                 <img src="Bear.png" alt="Panda Image" class="panda">
             </div>
@@ -291,9 +295,9 @@
                 particle.innerHTML = particleSymbol;
                 particle.style.left = `${x + Math.random() * 50 - 25}px`;
                 particle.style.top = `${y + Math.random() * 50 - 25}px`;
-                particle.style.fontSize = `${Math.random() * 20 + 10}px`; // Random size
-
+                particle.style.fontSize = `${Math.random() * 20 + 10}px`;
                 document.body.appendChild(particle);
+                
                 setTimeout(() => {
                     particle.remove();
                 }, 1000);
