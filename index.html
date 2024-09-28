@@ -125,13 +125,10 @@
         }
 
         /* Speech bubble styling */
-        .panda-container::after {
-            content: "Will you be my Fiancée?";
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
+        .speech-bubble {
+            position: relative;
+            display: inline-block;
+            margin-top: 10px;
             padding: 10px;
             background-color: #ff6f6f;
             color: white;
@@ -141,16 +138,16 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        /* Add a triangle (speech bubble tail) */
-        .panda-container::before {
+        /* Triangle for speech bubble tail */
+        .speech-bubble::after {
             content: '';
             position: absolute;
-            top: -10px;
+            top: 100%;
             left: 50%;
             transform: translateX(-50%);
             border-width: 10px;
             border-style: solid;
-            border-color: transparent transparent #ff6f6f transparent;
+            border-color: #ff6f6f transparent transparent transparent;
         }
 
         .button {
@@ -199,7 +196,7 @@
             .panda {
                 max-width: 80%;
             }
-            .panda-container::after {
+            .speech-bubble {
                 width: 70%;
                 font-size: 0.9em;
             }
@@ -249,7 +246,7 @@
                 <button class="button no" onclick="loveResponse(false, event)">💔 No</button>
             </div>
 
-            <p id="response"></p>
+            <div id="response"></div>
         </div>
     </div>
 
@@ -267,14 +264,21 @@
 
         function loveResponse(answer, event) {
             event.stopPropagation(); // Prevent click event from bubbling to the book
-            var response = document.getElementById("response");
+            var responseDiv = document.getElementById("response");
+            responseDiv.innerHTML = ''; // Clear previous response
+            
+            var bubble = document.createElement('div');
+            bubble.classList.add('speech-bubble');
+
             if (answer) {
-                response.textContent = "Yay! I love you a lot, My Fiancée! ❤️";
+                bubble.textContent = "Yay! I love you a lot, My Fiancée! ❤️";
                 createParticles(event.clientX, event.clientY, 'heart');
             } else {
-                response.textContent = "You should say YES! because you're always be just all MINE!❤️";
+                bubble.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
                 createParticles(event.clientX, event.clientY, 'burning-heart');
             }
+
+            responseDiv.appendChild(bubble);
         }
 
         function createParticles(x, y, type) {
