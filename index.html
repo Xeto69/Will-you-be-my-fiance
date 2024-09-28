@@ -64,7 +64,7 @@
         }
 
         .book-cover {
-            background-image: url('Love_Cover_High_Quality.jpg'); /* Use a higher quality cover image */
+            background-image: url('Love Cover.jpg');
             background-color: #ffffff;
             border-right: 1px solid #e0e0e0;
             transform-origin: left;
@@ -162,10 +162,11 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
             width: 80%;
+            background: linear-gradient(180deg, #ff4b4b, #e63939);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .yes {
-            background-color: #ff4b4b;
             color: white;
         }
 
@@ -233,7 +234,7 @@
 <body>
 
     <!-- Book container with cover, back, and spine -->
-    <div class="book" id="book">
+    <div class="book" id="book" tabindex="0">
         <div class="book-cover"></div>
         <div class="book-spine"></div>
         <div class="book-back"></div>
@@ -258,42 +259,37 @@
             this.classList.toggle("open");
         });
 
+        document.getElementById("book").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                this.classList.toggle("open");
+            }
+        });
+
         function loveResponse(answer, event) {
             event.stopPropagation(); // Prevent click event from bubbling to the book
             var response = document.getElementById("response");
             if (answer) {
                 response.textContent = "Yay! I love you a lot, My Fiancée! ❤️";
-                createHeartParticles(event.clientX, event.clientY);
+                createParticles(event.clientX, event.clientY, 'heart');
             } else {
                 response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
-                createBurningHeartParticles(event.clientX, event.clientY);
+                createParticles(event.clientX, event.clientY, 'burning-heart');
             }
         }
 
-        function createHeartParticles(x, y) {
-            for (let i = 0; i < 30; i++) {
+        function createParticles(x, y, type) {
+            const particleCount = 30;
+            const particleSymbol = type === 'heart' ? "❤️" : "🔥❤️";
+            
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
-                particle.classList.add('particle', 'heart');
-                particle.innerHTML = "❤️";
+                particle.classList.add('particle', type);
+                particle.innerHTML = particleSymbol;
                 particle.style.left = `${x + Math.random() * 50 - 25}px`;
                 particle.style.top = `${y + Math.random() * 50 - 25}px`;
-                document.body.appendChild(particle);
-                // Remove particle after animation
-                setTimeout(() => {
-                    particle.remove();
-                }, 1000);
-            }
-        }
+                particle.style.fontSize = `${Math.random() * 20 + 10}px`; // Random size
 
-        function createBurningHeartParticles(x, y) {
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle', 'burning-heart');
-                particle.innerHTML = "🔥";
-                particle.style.left = `${x + Math.random() * 50 - 25}px`;
-                particle.style.top = `${y + Math.random() * 50 - 25}px`;
                 document.body.appendChild(particle);
-                // Remove particle after animation
                 setTimeout(() => {
                     particle.remove();
                 }, 1000);
