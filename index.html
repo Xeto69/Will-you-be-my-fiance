@@ -127,7 +127,7 @@
         /* Speech bubble styling */
         .speech-bubble {
             position: absolute;
-            bottom: 20px; /* Adjusted position inside the book */
+            bottom: 80px; /* Adjusted position above the buttons */
             left: 50%;
             transform: translateX(-50%);
             display: inline-block;
@@ -268,6 +268,8 @@
         function loveResponse(answer, event) {
             event.stopPropagation(); // Prevent click event from bubbling to the book
             var responseDiv = document.getElementById("response");
+            responseDiv.innerHTML = ''; // Clear previous response
+
             var bubble = document.createElement('div');
             bubble.classList.add('speech-bubble');
 
@@ -279,28 +281,29 @@
                 createParticles(event.clientX, event.clientY, 'burning-heart');
             }
 
-            // Clear previous response and append the speech bubble to the response div
-            responseDiv.innerHTML = ''; // Clear previous response
             responseDiv.appendChild(bubble);
             bubble.style.visibility = 'visible'; // Make bubble visible
 
             // Position the bubble to fit inside the book
-            bubble.style.bottom = '40px'; // Adjusted bottom position
+            bubble.style.bottom = '80px'; // Adjusted bottom position for visibility
         }
 
         function createParticles(x, y, type) {
             for (var i = 0; i < 30; i++) {
                 var particle = document.createElement('div');
                 particle.classList.add('particle');
-                particle.innerHTML = type === 'heart' ? '❤️' : '❤️🔥'; // Heart or burning heart emoji
+                particle.innerHTML = type === 'heart' ? '❤️' : '🔥';
                 document.body.appendChild(particle);
                 
-                // Randomize position and animation duration
-                particle.style.left = `${x + (Math.random() - 0.5) * 50}px`; // Slightly randomize x position
-                particle.style.top = `${y + (Math.random() - 0.5) * 50}px`; // Slightly randomize y position
-                particle.style.animationDuration = `${Math.random() * 1 + 0.5}s`; // Randomize duration
+                // Set initial position of particle
+                particle.style.left = (x + Math.random() * 40 - 20) + 'px'; // Randomize x position
+                particle.style.top = (y + Math.random() * 40 - 20) + 'px'; // Randomize y position
+                
+                // Set random color and animation
+                particle.style.color = type === 'heart' ? 'red' : 'orange';
+                particle.style.animationDelay = Math.random() * 0.5 + 's';
 
-                // Remove the particle after the animation ends
+                // Remove particle after animation
                 particle.addEventListener('animationend', function() {
                     this.remove();
                 });
