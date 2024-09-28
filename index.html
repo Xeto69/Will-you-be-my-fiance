@@ -126,10 +126,6 @@
 
         /* Speech bubble styling */
         .speech-bubble {
-            position: absolute;
-            top: 100%; /* Place bubble below the buttons */
-            left: 50%;
-            transform: translateX(-50%);
             display: inline-block;
             padding: 10px;
             background-color: #ff6f6f;
@@ -139,7 +135,7 @@
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 90%; /* Limit bubble width */
-            z-index: 1; /* Ensure bubble is on top */
+            margin-top: 10px; /* Spacing below buttons */
             visibility: hidden; /* Hidden initially */
         }
 
@@ -249,7 +245,8 @@
                 <button class="button no" onclick="loveResponse(false, event)">💔 No</button>
             </div>
 
-            <div id="response"></div>
+            <!-- Speech bubble -->
+            <div id="response" class="speech-bubble"></div>
         </div>
     </div>
 
@@ -267,11 +264,8 @@
 
         function loveResponse(answer, event) {
             event.stopPropagation(); // Prevent click event from bubbling to the book
-            var responseDiv = document.getElementById("response");
-            responseDiv.innerHTML = ''; // Clear previous response
-
-            var bubble = document.createElement('div');
-            bubble.classList.add('speech-bubble');
+            var bubble = document.getElementById("response");
+            bubble.innerHTML = ''; // Clear previous response
 
             if (answer) {
                 bubble.textContent = "Yay! I love you a lot, My Fiancée! ❤️";
@@ -281,7 +275,6 @@
                 createParticles(event.clientX, event.clientY, 'burning-heart');
             }
 
-            responseDiv.appendChild(bubble);
             bubble.style.visibility = 'visible'; // Make bubble visible
         }
 
@@ -302,12 +295,11 @@
 
                 document.body.appendChild(particle);
 
-                setTimeout(function() {
-                    particle.remove();
-                }, 1000);
+                setTimeout(function(p) {
+                    p.remove();
+                }, 1000, particle);
             }
         }
     </script>
-
 </body>
 </html>
