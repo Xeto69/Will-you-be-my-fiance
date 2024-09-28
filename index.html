@@ -10,6 +10,7 @@
             text-align: center;
             background-color: #f0f0f0;
             padding: 50px;
+            overflow: hidden; /* Prevent scrolling when particles are generated */
         }
 
         /* Book container */
@@ -19,10 +20,10 @@
             height: 400px;
             margin: 0 auto;
             perspective: 1500px;
-            background: url('book-background.jpg') no-repeat center center; /* Add a textured background image */
-            background-size: cover; /* Make sure it covers the entire container */
-            border: 2px solid #8B4513; /* Brown border to mimic a real book */
-            border-radius: 10px; /* Rounded corners */
+            background: url('book-background.jpg') no-repeat center center;
+            background-size: cover;
+            border: 2px solid #8B4513;
+            border-radius: 10px;
         }
 
         /* Book cover and back */
@@ -39,7 +40,7 @@
             cursor: pointer;
             transform-origin: left;
             transition: transform 1s ease-in-out;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border-radius: 5px;
         }
 
@@ -52,18 +53,18 @@
             height: 100%;
             background: linear-gradient(90deg, #c4b69e, #b8a68c);
             box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.3);
-            border-radius: 5px; /* Rounded spine */
+            border-radius: 5px;
         }
 
         .book-cover {
-            background-image: url('Love Cover.jpg'); /* Change this to your book cover image */
-            background-color: #ffffff; /* Fallback color */
+            background-image: url('Love Cover.jpg');
+            background-color: #ffffff;
             border-right: 1px solid #e0e0e0;
             transform-origin: left;
         }
 
         .book-back {
-            background-image: url('book-back.jpg'); /* Change this to your book back image */
+            background-image: url('book-back.jpg');
             transform-origin: right;
             transform: rotateY(0deg);
         }
@@ -194,6 +195,36 @@
                 font-size: 1em;
             }
         }
+
+        /* Particle Styles */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: particle-animation 1s forwards;
+        }
+
+        @keyframes particle-animation {
+            to {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
+
+        .heart {
+            background-color: red;
+            /* Heart shape */
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .fire {
+            background-color: orange;
+            /* Fire shape (using a triangular shape) */
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
     </style>
 </head>
 <body>
@@ -229,8 +260,29 @@
             var response = document.getElementById("response");
             if (answer) {
                 response.textContent = "Yay! I love you a lot My Fiancée! ❤️";
+                createParticles(event.clientX, event.clientY, 'heart');
             } else {
                 response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
+                createParticles(event.clientX, event.clientY, 'fire');
+            }
+        }
+
+        function createParticles(x, y, type) {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.classList.add(type);
+                document.body.appendChild(particle);
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                // Randomize direction
+                const angle = Math.random() * Math.PI * 2; // Random angle
+                const distance = Math.random() * 100 + 50; // Random distance
+                particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+                particle.style.opacity = 1; // Make it visible
+                particle.addEventListener('animationend', () => {
+                    particle.remove(); // Remove the particle after animation ends
+                });
             }
         }
     </script>
