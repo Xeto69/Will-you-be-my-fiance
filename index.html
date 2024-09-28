@@ -126,9 +126,11 @@
 
         /* Speech bubble styling */
         .speech-bubble {
-            position: relative;
+            position: absolute;
+            top: -50px; /* Adjusted position */
+            left: 50%;
+            transform: translateX(-50%);
             display: inline-block;
-            margin-top: 10px;
             padding: 10px;
             background-color: #ff6f6f;
             color: white;
@@ -136,6 +138,8 @@
             text-align: center;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%; /* Limit bubble width */
+            z-index: 1; /* Ensure bubble is on top */
         }
 
         /* Triangle for speech bubble tail */
@@ -184,6 +188,7 @@
             font-size: 1.5em;
             margin-top: 20px;
             color: #333;
+            position: relative; /* Required for positioning bubble */
         }
 
         /* Scale effect for buttons */
@@ -282,25 +287,23 @@
                 createParticles(event.clientX, event.clientY, 'burning-heart');
             }
 
+            // Append the speech bubble to the response div
             responseDiv.appendChild(bubble);
         }
 
         function createParticles(x, y, type) {
             const particleCount = 30;
             const particleSymbol = type === 'heart' ? "❤️" : "🔥❤️";
-            
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
-                particle.classList.add('particle', type);
-                particle.innerHTML = particleSymbol;
-                particle.style.left = `${x + Math.random() * 50 - 25}px`;
-                particle.style.top = `${y + Math.random() * 50 - 25}px`;
-                particle.style.fontSize = `${Math.random() * 20 + 10}px`;
+                particle.classList.add('particle');
+                particle.textContent = particleSymbol;
+                particle.style.left = `${x + (Math.random() - 0.5) * 50}px`;
+                particle.style.top = `${y + (Math.random() - 0.5) * 50}px`;
                 document.body.appendChild(particle);
-                
                 setTimeout(() => {
                     particle.remove();
-                }, 1000);
+                }, 1000); // Remove particle after animation
             }
         }
     </script>
