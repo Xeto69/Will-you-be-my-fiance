@@ -19,7 +19,6 @@
             height: 400px;
             margin: 0 auto;
             perspective: 1500px;
-            overflow: hidden; /* Prevent overflow of inner content */
         }
 
         /* Book cover and back */
@@ -67,7 +66,7 @@
         /* Inner book content */
         .book-inner {
             position: absolute;
-            width: 100%; /* Keep it the same as the book width */
+            width: 100%;
             height: 100%;
             background-color: white;
             text-align: center;
@@ -75,7 +74,6 @@
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
             display: none; /* Hidden by default */
             border-radius: 0 5px 5px 0;
-            overflow: hidden; /* Prevent overflow */
         }
 
         /* Open animation */
@@ -88,7 +86,7 @@
         }
 
         .book.open .book-inner {
-            display: block; /* Show inner content when open */
+            display: block;
         }
 
         .panda-container {
@@ -202,8 +200,8 @@
             </div>
 
             <div>
-                <button class="button yes" onclick="loveResponse(true)">❤️ Yes</button>
-                <button class="button no" onclick="loveResponse(false)">💔 No</button>
+                <button class="button yes" onclick="loveResponse(true, event)">❤️ Yes</button>
+                <button class="button no" onclick="loveResponse(false, event)">💔 No</button>
             </div>
 
             <p id="response"></p>
@@ -216,7 +214,8 @@
             this.classList.toggle("open");
         });
 
-        function loveResponse(answer) {
+        function loveResponse(answer, event) {
+            event.stopPropagation(); // Prevent click event from bubbling to the book
             var response = document.getElementById("response");
             if (answer) {
                 response.textContent = "Yay! I love you a lot My Fiancée! ❤️";
