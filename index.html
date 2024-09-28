@@ -23,7 +23,6 @@
             position: relative;
             width: 90%;
             max-width: 300px;
-            height: auto;
             aspect-ratio: 3 / 4;
             margin: 0 auto;
             perspective: 1500px;
@@ -188,26 +187,11 @@
 
         /* Media query for mobile responsiveness */
         @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-
-            .book {
-                max-width: 250px;
-                padding: 10px;
-            }
-
             .panda {
-                max-width: 70%; /* Larger image on mobile */
+                max-width: 80%;
             }
-
-            .button {
-                width: 90%; /* Button size on mobile */
-                padding: 14px;
-            }
-
             .speech-bubble {
-                width: 80%;
+                width: 70%;
                 font-size: 0.9em;
             }
         }
@@ -241,10 +225,10 @@
 <body>
 
     <!-- Book container with cover, back, and spine -->
-    <div class="book" id="book" tabindex="0">
-        <div class="book-cover"></div>
-        <div class="book-spine"></div>
-        <div class="book-back"></div>
+    <div class="book" id="book" tabindex="0" aria-label="Interactive proposal book">
+        <div class="book-cover" aria-hidden="true"></div>
+        <div class="book-spine" aria-hidden="true"></div>
+        <div class="book-back" aria-hidden="true"></div>
         <div class="book-inner">
             <!-- Text above the bear image -->
             <div>
@@ -252,7 +236,7 @@
             </div>
             <!-- Panda Container with the bear image -->
             <div class="panda-container">
-                <img src="Bubu.png" alt="Bubu Image" class="panda">
+                <img src="Bubu.png" alt="Panda Bubu image" class="panda">
             </div>
 
             <div>
@@ -267,42 +251,51 @@
 
     <script>
         // Toggle book opening effect
-        document.getElementById("book").addEventListener("click", function() {
-            this.classList.toggle("open");
+        const book = document.getElementById("book");
+        book.addEventListener("click", () => {
+            book.classList.toggle("open");
         });
 
-        document.getElementById("book").addEventListener("keydown", function(event) {
+        book.addEventListener("keydown", (event) => {
             if (event.key === "Enter") {
-                this.classList.toggle("open");
+                book.classList.toggle("open");
             }
         });
 
         function loveResponse(answer, event) {
             event.stopPropagation(); // Prevent click event from bubbling to the book
-            var bubble = document.getElementById("response");
-            bubble.innerHTML = ''; // Clear previous content
-            bubble.style.visibility = 'visible'; // Show the speech bubble
+            const bubble = document.getElementById("response");
+            bubble.innerHTML = ''; // Clear previous response
 
             if (answer) {
-                createParticles(event.clientX, event.clientY, '❤️');
-                bubble.innerHTML = '<div>Of course! We’ll walk this path together.</div>';
+                bubble.textContent = "Yay! I love you a lot, My Fiancée!❤️";
+                createParticles(event.clientX, event.clientY, 'heart');
             } else {
-                createParticles(event.clientX, event.clientY, '💔');
-                bubble.innerHTML = '<div>Oh no, how could you break Bubu\'s heart?</div>';
+                bubble.textContent = "You should say YES! because you'll always just be all MINE❤️";
+                createParticles(event.clientX, event.clientY, 'burning-heart');
             }
+
+            bubble.style.visibility = 'visible'; // Make bubble visible
         }
 
-        function createParticles(x, y, emoji) {
-            for (let i = 0; i < 10; i++) {
+        function createParticles(x, y, type) {
+            for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.left = `${x + (Math.random() * 100 - 50)}px`;
-                particle.style.top = `${y + (Math.random() * 100 - 50)}px`;
-                particle.innerHTML = emoji;
+                particle.classList.add('particle', type);
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+
+                const emoji = type === 'heart' ? '❤️' : '🔥';
+                particle.textContent = emoji;
+
                 document.body.appendChild(particle);
+
+                const duration = Math.random() * 1000 + 500;
+                particle.style.animationDuration = `${duration}ms`;
+
                 setTimeout(() => {
                     particle.remove();
-                }, 1000);
+                }, duration);
             }
         }
     </script>
