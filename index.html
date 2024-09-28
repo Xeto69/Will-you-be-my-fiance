@@ -81,10 +81,11 @@
             height: 100%;
             background-color: white;
             text-align: center;
-            padding: 20px;
+            padding: 30px; /* Increased padding for better spacing */
             display: none; /* Hidden by default */
             border-radius: 0 5px 5px 0;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden; /* Ensure content does not overflow */
         }
 
         /* Open animation */
@@ -285,20 +286,24 @@
                 particle.style.left = `${x}px`;
                 particle.style.top = `${y}px`;
 
-                const emoji = type === 'heart' ? '❤️' : '🔥';
-                particle.textContent = emoji;
+                const emoji = type === 'heart' ? '❤️' : '💔';
+                particle.innerHTML = emoji;
 
                 document.body.appendChild(particle);
 
-                const duration = Math.random() * 1000 + 500;
-                particle.style.animationDuration = `${duration}ms`;
+                const size = Math.random() * 20 + 10; // Random size
+                particle.style.fontSize = `${size}px`;
 
-                setTimeout(() => {
+                const angle = Math.random() * 360; // Random angle
+                const distance = Math.random() * 100 + 50; // Random distance
+                particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+
+                // Remove the particle after animation ends
+                particle.addEventListener('animationend', () => {
                     particle.remove();
-                }, duration);
+                });
             }
         }
     </script>
-
 </body>
 </html>
