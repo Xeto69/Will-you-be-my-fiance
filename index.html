@@ -9,21 +9,23 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             background-color: #f0f0f0;
-            padding: 50px;
+            padding: 20px; /* Reduced padding for mobile */
             overflow: hidden; /* Prevent scrolling when particles are generated */
         }
 
         /* Book container */
         .book {
             position: relative;
-            width: 300px;
-            height: 400px;
+            width: 80%; /* Set to a percentage for responsiveness */
+            max-width: 300px; /* Set a max width for larger screens */
+            height: auto; /* Set to auto for responsive height */
             margin: 0 auto;
             perspective: 1500px;
             background: url('book-background.jpg') no-repeat center center;
             background-size: cover;
             border: 2px solid #8B4513;
             border-radius: 10px;
+            overflow: hidden; /* Ensure contents don't overflow */
         }
 
         /* Book cover and back */
@@ -36,23 +38,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2em;
+            font-size: 2em; /* Font size for larger screens */
             cursor: pointer;
             transform-origin: left;
             transition: transform 1s ease-in-out;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-        }
-
-        /* 3D Spine */
-        .book-spine {
-            position: absolute;
-            top: 0;
-            left: -10px;
-            width: 10px;
-            height: 100%;
-            background: linear-gradient(90deg, #c4b69e, #b8a68c);
-            box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.3);
             border-radius: 5px;
         }
 
@@ -113,7 +103,7 @@
 
         /* Panda image styling */
         .panda {
-            max-width: 150px;
+            max-width: 60%; /* Reduced for smaller screens */
             height: auto;
         }
 
@@ -124,11 +114,11 @@
             top: -50px;
             left: 50%;
             transform: translateX(-50%);
-            width: 200px;
+            width: 150px; /* Adjusted width */
             padding: 10px;
             background-color: #ff6f6f;
             color: white;
-            font-size: 1.2em;
+            font-size: 1em; /* Adjusted for smaller screens */
             text-align: center;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -147,13 +137,14 @@
         }
 
         .button {
-            font-size: 1.2em;
-            padding: 12px 24px;
+            font-size: 1em; /* Adjusted for smaller screens */
+            padding: 10px 20px; /* Adjusted padding */
             margin: 10px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 80%; /* Make buttons responsive */
         }
 
         .yes {
@@ -175,7 +166,7 @@
         }
 
         #response {
-            font-size: 1.5em;
+            font-size: 1.2em; /* Adjusted for smaller screens */
             margin-top: 20px;
             color: #333;
         }
@@ -188,11 +179,11 @@
         /* Media query for mobile responsiveness */
         @media (max-width: 600px) {
             .panda {
-                max-width: 100px;
+                max-width: 80px; /* Further reduced size */
             }
             .panda-container::after {
-                width: 150px;
-                font-size: 1em;
+                width: 130px; /* Adjusted width for speech bubble */
+                font-size: 0.8em; /* Smaller font size */
             }
         }
 
@@ -277,14 +268,18 @@
                 particle.style.top = y + 'px';
                 // Randomize direction
                 const angle = Math.random() * Math.PI * 2; // Random angle
-                const distance = Math.random() * 100 + 50; // Random distance
-                particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-                particle.style.opacity = 1; // Make it visible
+                const speed = Math.random() * 50 + 30; // Random speed
+                particle.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+                particle.style.transform = `translate(${Math.cos(angle) * speed}px, ${Math.sin(angle) * speed}px)`;
+                particle.style.opacity = 1;
+
+                // Remove particle after animation
                 particle.addEventListener('animationend', () => {
-                    particle.remove(); // Remove the particle after animation ends
+                    particle.remove();
                 });
             }
         }
     </script>
+
 </body>
 </html>
