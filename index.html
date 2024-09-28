@@ -120,7 +120,7 @@
 
         /* Panda image styling */
         .panda {
-            max-width: 50%;
+            max-width: 80%; /* Increase max-width for mobile */
             height: auto;
         }
 
@@ -198,7 +198,7 @@
                 padding: 20px; /* Adjust padding for smaller screens */
             }
             .panda {
-                max-width: 80%;
+                max-width: 80%; /* Adjust panda size */
             }
             .speech-bubble {
                 width: 70%;
@@ -244,11 +244,11 @@
         <div class="book-spine" aria-hidden="true"></div>
         <div class="book-back" aria-hidden="true"></div>
         <div class="book-inner">
-            <!-- Text above the bear image -->
+            <!-- Text above the panda image -->
             <div>
                 <h2>Will you be My Fiancée?</h2>
             </div>
-            <!-- Panda Container with the bear image -->
+            <!-- Panda Container with the panda image -->
             <div class="panda-container">
                 <img src="Bubu.png" alt="Panda Bubu image" class="panda">
             </div>
@@ -292,23 +292,30 @@
             }, 3000);
         }
 
-        // Particle effect
-        function createParticle(event) {
+        // Particle effect for hearts
+        const createParticle = (x, y) => {
             const particle = document.createElement('div');
-            particle.className = 'particle heart';
-            particle.style.left = event.clientX + 'px';
-            particle.style.top = event.clientY + 'px';
+            particle.classList.add('particle', 'heart');
+            particle.innerHTML = '❤️'; // Use heart emoji
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
             document.body.appendChild(particle);
-            const size = Math.random() * 5 + 5; // Random size
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            setTimeout(() => {
-                particle.remove();
-            }, 1000);
-        }
 
-        // Event listener for creating particles on mouse click
-        document.addEventListener('click', createParticle);
+            // Remove particle after animation ends
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
+        };
+
+        // Listen for heart clicks
+        document.querySelectorAll('.yes').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const rect = button.getBoundingClientRect();
+                const x = rect.left + rect.width / 2;
+                const y = rect.top;
+                createParticle(x, y);
+            });
+        });
     </script>
 </body>
 </html>
