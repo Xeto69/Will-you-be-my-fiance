@@ -3,49 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nothing At All</title>
+    <title>Nothing at all</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             background-color: #f0f0f0;
             padding: 50px;
         }
-        h1 {
-            font-size: 2em;
-            font-weight: bold;
+
+        .panda-container {
+            position: relative;
+            display: inline-block;
+            animation: bounce 2s infinite;
         }
-        img {
-            max-width: 200px;
+
+        /* Keyframe animation for bounce effect */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Panda image styling */
+        .panda {
+            max-width: 150px;
             height: auto;
-            margin: 20px 0;
         }
+
+        /* Speech bubble styling */
+        .panda-container::after {
+            content: "Will you be my Fiancée?";
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            padding: 10px;
+            background-color: #ff6f6f;
+            color: white;
+            font-size: 1.2em;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add a triangle (speech bubble tail) */
+        .panda-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent transparent #ff6f6f transparent;
+        }
+
         .button {
             font-size: 1.2em;
-            padding: 10px 20px;
+            padding: 12px 24px;
             margin: 10px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
         .yes {
             background-color: #ff4b4b;
             color: white;
         }
+
+        .yes:hover {
+            background-color: #e63939;
+        }
+
         .no {
             background-color: #555555;
             color: white;
         }
+
+        .no:hover {
+            background-color: #333333;
+        }
+
         #response {
             font-size: 1.5em;
             margin-top: 20px;
+            color: #333;
+        }
+
+        .open-button {
+            font-size: 1.2em;
+            padding: 10px 30px;
+            background-color: #ff4b4b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .open-button:hover {
+            background-color: #e63939;
+        }
+
+        /* Media query for mobile responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            .panda {
+                max-width: 100px;
+            }
+            .panda-container::after {
+                width: 150px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Will you be my Fiancé?</h1>
-    <img src="Bear.png" alt="Cute bear image">
-    
+    <h1>Will you be my Fiancée?</h1>
+
+    <!-- Panda Container with the speech bubble -->
+    <div class="panda-container">
+        <img src="Bear.png" alt="Bear Image" class="panda">
+    </div>
+
     <div>
         <button class="button yes" onclick="loveResponse(true)">❤️ Yes</button>
         <button class="button no" onclick="loveResponse(false)">💔 No</button>
@@ -57,9 +146,9 @@
         function loveResponse(answer) {
             var response = document.getElementById("response");
             if (answer) {
-                response.textContent = "Yay! I love you alot My Fiance!❤️";
+                response.textContent = "Yay! I love you a lot My Fiancée! ❤️";
             } else {
-                response.textContent = "You should say YES! because you're always be just MINE!❤️";
+                response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
             }
         }
     </script>
