@@ -19,6 +19,10 @@
             height: 400px;
             margin: 0 auto;
             perspective: 1500px;
+            background: url('book-background.jpg') no-repeat center center; /* Add a textured background image */
+            background-size: cover; /* Make sure it covers the entire container */
+            border: 2px solid #8B4513; /* Brown border to mimic a real book */
+            border-radius: 10px; /* Rounded corners */
         }
 
         /* Book cover and back */
@@ -35,7 +39,7 @@
             cursor: pointer;
             transform-origin: left;
             transition: transform 1s ease-in-out;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
             border-radius: 5px;
         }
 
@@ -47,7 +51,8 @@
             width: 10px;
             height: 100%;
             background: linear-gradient(90deg, #c4b69e, #b8a68c);
-            box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 5px; /* Rounded spine */
         }
 
         .book-cover {
@@ -71,7 +76,7 @@
             background-color: white;
             text-align: center;
             padding: 20px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
             display: none; /* Hidden by default */
             border-radius: 0 5px 5px 0;
         }
