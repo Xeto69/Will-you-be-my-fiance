@@ -127,7 +127,7 @@
         /* Speech bubble styling */
         .speech-bubble {
             position: absolute;
-            bottom: 80px; /* Adjusted position above the buttons */
+            top: 100%; /* Place bubble below the buttons */
             left: 50%;
             transform: translateX(-50%);
             display: inline-block;
@@ -147,12 +147,12 @@
         .speech-bubble::after {
             content: '';
             position: absolute;
-            top: 100%;
+            top: -10px; /* Position triangle above bubble */
             left: 50%;
             transform: translateX(-50%);
             border-width: 10px;
             border-style: solid;
-            border-color: #ff6f6f transparent transparent transparent;
+            border-color: transparent transparent #ff6f6f transparent;
         }
 
         .button {
@@ -283,32 +283,31 @@
 
             responseDiv.appendChild(bubble);
             bubble.style.visibility = 'visible'; // Make bubble visible
-
-            // Position the bubble to fit inside the book
-            bubble.style.bottom = '80px'; // Adjusted bottom position for visibility
         }
 
         function createParticles(x, y, type) {
             for (var i = 0; i < 30; i++) {
                 var particle = document.createElement('div');
                 particle.classList.add('particle');
-                particle.innerHTML = type === 'heart' ? '❤️' : '🔥';
-                document.body.appendChild(particle);
-                
-                // Set initial position of particle
-                particle.style.left = (x + Math.random() * 40 - 20) + 'px'; // Randomize x position
-                particle.style.top = (y + Math.random() * 40 - 20) + 'px'; // Randomize y position
-                
-                // Set random color and animation
-                particle.style.color = type === 'heart' ? 'red' : 'orange';
-                particle.style.animationDelay = Math.random() * 0.5 + 's';
+                particle.style.left = x + (Math.random() - 0.5) * 100 + 'px';
+                particle.style.top = y + (Math.random() - 0.5) * 100 + 'px';
 
-                // Remove particle after animation
-                particle.addEventListener('animationend', function() {
-                    this.remove();
-                });
+                if (type === 'heart') {
+                    particle.innerHTML = '❤️';
+                    particle.classList.add('heart');
+                } else {
+                    particle.innerHTML = '🔥';
+                    particle.classList.add('burning-heart');
+                }
+
+                document.body.appendChild(particle);
+
+                setTimeout(function() {
+                    particle.remove();
+                }, 1000);
             }
         }
     </script>
+
 </body>
 </html>
