@@ -3,13 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Fiancée?</title>
+    <title>Nothing At All</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             background-color: #f0f0f0;
             padding: 50px;
+        }
+
+        /* Book container */
+        .book {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+
+        /* Book cover and back */
+        .book-cover, .book-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #ff6f6f;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            cursor: pointer;
+            transform-origin: left;
+            transition: transform 1s ease;
+        }
+
+        .book-back {
+            background-color: #e63939;
+            transform-origin: right;
+            transform: rotateY(0deg);
+        }
+
+        /* Inner book content */
+        .book-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hidden by default */
+        }
+
+        /* Open animation */
+        .book.open .book-cover {
+            transform: rotateY(-180deg);
+        }
+
+        .book.open .book-back {
+            transform: rotateY(180deg);
+        }
+
+        .book.open .book-inner {
+            display: block;
         }
 
         .panda-container {
@@ -97,21 +153,6 @@
             color: #333;
         }
 
-        .open-button {
-            font-size: 1.2em;
-            padding: 10px 30px;
-            background-color: #ff4b4b;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .open-button:hover {
-            background-color: #e63939;
-        }
-
         /* Media query for mobile responsiveness */
         @media (max-width: 600px) {
             .panda {
@@ -126,19 +167,31 @@
 </head>
 <body>
 
-    <!-- Panda Container with the speech bubble -->
-    <div class="panda-container">
-        <img src="Bear.png" alt="Panda Image" class="panda">
-    </div>
+    <!-- Book container with cover and back -->
+    <div class="book" id="book">
+        <div class="book-cover">Open Me!</div>
+        <div class="book-back"></div>
+        <div class="book-inner">
+            <!-- Panda Container with the speech bubble inside the book -->
+            <div class="panda-container">
+                <img src="Bear.png" alt="Panda Image" class="panda">
+            </div>
 
-    <div>
-        <button class="button yes" onclick="loveResponse(true)">❤️ Yes</button>
-        <button class="button no" onclick="loveResponse(false)">💔 No</button>
-    </div>
+            <div>
+                <button class="button yes" onclick="loveResponse(true)">❤️ Yes</button>
+                <button class="button no" onclick="loveResponse(false)">💔 No</button>
+            </div>
 
-    <p id="response"></p>
+            <p id="response"></p>
+        </div>
+    </div>
 
     <script>
+        // Toggle book opening effect
+        document.getElementById("book").addEventListener("click", function() {
+            this.classList.toggle("open");
+        });
+
         function loveResponse(answer) {
             var response = document.getElementById("response");
             if (answer) {
