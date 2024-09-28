@@ -285,33 +285,26 @@
             bubble.style.visibility = 'visible'; // Make bubble visible
 
             // Position the bubble to fit inside the book
-            bubble.style.bottom = 40px; // Adjusted bottom position
+            bubble.style.bottom = '40px'; // Adjusted bottom position
         }
 
         function createParticles(x, y, type) {
-            const particleCount = 30;
-            const particleSymbol = type === 'heart' ? "❤️" : "🔥❤️";
-            for (let i = 0; i < particleCount; i++) {
-                createParticle(x, y, particleSymbol);
+            for (var i = 0; i < 30; i++) {
+                var particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.innerHTML = type === 'heart' ? '❤️' : '🔥'; // Heart or burning heart emoji
+                document.body.appendChild(particle);
+                
+                // Randomize position and animation duration
+                particle.style.left = `${x + (Math.random() - 0.5) * 50}px`; // Slightly randomize x position
+                particle.style.top = `${y + (Math.random() - 0.5) * 50}px`; // Slightly randomize y position
+                particle.style.animationDuration = `${Math.random() * 1 + 0.5}s`; // Randomize duration
+
+                // Remove the particle after the animation ends
+                particle.addEventListener('animationend', function() {
+                    this.remove();
+                });
             }
-        }
-
-        function createParticle(x, y, symbol) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.innerHTML = symbol;
-            document.body.appendChild(particle);
-            const randomX = Math.random() * 20 - 10; // Random horizontal offset
-            const randomDuration = Math.random() * 0.5 + 0.5; // Random duration between 0.5s and 1s
-
-            particle.style.left = ${x + randomX}px;
-            particle.style.top = ${y}px;
-            particle.style.animationDuration = ${randomDuration}s;
-
-            // Remove particle after animation
-            particle.addEventListener('animationend', () => {
-                particle.remove();
-            });
         }
     </script>
 </body>
