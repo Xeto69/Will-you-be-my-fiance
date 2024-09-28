@@ -147,7 +147,7 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .yes {
@@ -172,6 +172,11 @@
             font-size: 1.5em;
             margin-top: 20px;
             color: #333;
+        }
+
+        /* Scale effect for buttons */
+        .button:active {
+            transform: scale(0.95);
         }
 
         /* Media query for mobile responsiveness */
