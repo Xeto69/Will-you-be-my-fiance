@@ -35,10 +35,45 @@
             cursor: pointer;
             transform-origin: left;
             transition: transform 1s ease;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hover effect for book cover */
+        .book-cover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
         .book-cover {
             background-image: url('Book Cover.png'); /* Change this to the path of your book cover image */
+            background-color: #444; /* Fallback color */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            background-blend-mode: overlay;
+        }
+
+        /* Text on the cover */
+        .book-cover::before {
+            content: "Nothing At All";
+            font-size: 1.8em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .book-cover::after {
+            content: "By Author Name";
+            font-size: 1em;
+            font-weight: normal;
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            color: #ddd;
         }
 
         .book-back {
@@ -204,10 +239,6 @@
                 response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
             }
         }
-    </script>
-</body>
-</html>
-
     </script>
 </body>
 </html>
