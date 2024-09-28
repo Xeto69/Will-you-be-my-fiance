@@ -169,6 +169,28 @@
         @keyframes particle-animation {
             to { transform: translateY(-100px); opacity: 0; }
         }
+
+        .heart {
+            color: red;
+            font-size: 30px;
+            animation: heart-bloom 0.5s forwards;
+        }
+
+        @keyframes heart-bloom {
+            0% { transform: scale(0.5); }
+            100% { transform: scale(1.5); }
+        }
+
+        .broken-heart {
+            color: darkred;
+            font-size: 30px;
+            animation: broken-heart-fall 0.5s forwards;
+        }
+
+        @keyframes broken-heart-fall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -200,13 +222,17 @@
             bubble.innerHTML = '';
             bubble.textContent = answer ? "Yay! I love you too, My Fiancée!" : "Oh... That's okay. Maybe someday!";
             bubble.style.visibility = 'visible';
-            if (answer) for (let i = 0; i < 5; i++) createParticle(event.clientX, event.clientY);
+            if (answer) {
+                for (let i = 0; i < 5; i++) createParticle(event.clientX, event.clientY, true);
+            } else {
+                for (let i = 0; i < 5; i++) createParticle(event.clientX, event.clientY, false);
+            }
         }
 
-        function createParticle(x, y) {
+        function createParticle(x, y, isLove) {
             const particle = document.createElement("span");
-            particle.className = 'particle heart';
-            particle.innerHTML = '❤️';
+            particle.className = 'particle ' + (isLove ? 'heart' : 'broken-heart');
+            particle.innerHTML = isLove ? '❤️' : '💔';
             particle.style.left = `${x}px`;
             particle.style.top = `${y}px`;
             document.body.appendChild(particle);
