@@ -43,7 +43,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2em; /* Use rem or em for responsiveness */
+            font-size: 2em;
             cursor: pointer;
             transform-origin: left;
             transition: transform 1s ease-in-out;
@@ -271,23 +271,18 @@
             book.classList.toggle("open");
         });
 
-        book.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                book.classList.toggle("open");
-            }
-        });
-
+        // Function to handle response and show the message in the bubble
         function loveResponse(answer, event) {
             event.stopPropagation(); // Prevent click event from bubbling to the book
             const bubble = document.getElementById("response");
             bubble.innerHTML = ''; // Clear previous response
 
             if (answer) {
-                bubble.textContent = "Yay! I love you too My Fiancée!";
+                bubble.textContent = "Yay! I love you too a lot, My Fiancée!";
             } else {
-                bubble.textContent = "That's not okay, you should say YES! You're all just MINE!";
+                bubble.textContent = "Won't agree with that. Say YES because you're all just mine forever!";
             }
-            bubble.style.visibility = "visible";
+            bubble.style.visibility = "visible"; // Show the speech bubble
         }
     </script>
 
