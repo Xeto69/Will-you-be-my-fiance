@@ -200,8 +200,8 @@
             </div>
 
             <div>
-                <button class="button yes" onclick="loveResponse(true)">❤️ Yes</button>
-                <button class="button no" onclick="loveResponse(false)">💔 No</button>
+                <button class="button yes" onclick="loveResponse(true, event)">❤️ Yes</button>
+                <button class="button no" onclick="loveResponse(false, event)">💔 No</button>
             </div>
 
             <p id="response"></p>
@@ -214,7 +214,8 @@
             this.classList.toggle("open");
         });
 
-        function loveResponse(answer) {
+        function loveResponse(answer, event) {
+            event.stopPropagation(); // Prevent click event from bubbling to the book
             var response = document.getElementById("response");
             if (answer) {
                 response.textContent = "Yay! I love you a lot My Fiancée! ❤️";
