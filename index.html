@@ -188,11 +188,26 @@
 
         /* Media query for mobile responsiveness */
         @media (max-width: 600px) {
-            .panda {
-                max-width: 80%;
+            body {
+                padding: 10px;
             }
+
+            .book {
+                max-width: 250px;
+                padding: 10px;
+            }
+
+            .panda {
+                max-width: 70%; /* Larger image on mobile */
+            }
+
+            .button {
+                width: 90%; /* Button size on mobile */
+                padding: 14px;
+            }
+
             .speech-bubble {
-                width: 70%;
+                width: 80%;
                 font-size: 0.9em;
             }
         }
@@ -265,41 +280,32 @@
         function loveResponse(answer, event) {
             event.stopPropagation(); // Prevent click event from bubbling to the book
             var bubble = document.getElementById("response");
-            bubble.innerHTML = ''; // Clear previous response
+            bubble.innerHTML = ''; // Clear previous content
+            bubble.style.visibility = 'visible'; // Show the speech bubble
 
             if (answer) {
-                bubble.textContent = "Yay! I love you a lot, My Fiancée!❤️";
-                createParticles(event.clientX, event.clientY, 'heart');
+                createParticles(event.clientX, event.clientY, '❤️');
+                bubble.innerHTML = '<div>Of course! We’ll walk this path together.</div>';
             } else {
-                bubble.textContent = "You should say YES! because you'll always just be all MINE❤️";
-                createParticles(event.clientX, event.clientY, 'burning-heart');
+                createParticles(event.clientX, event.clientY, '💔');
+                bubble.innerHTML = '<div>Oh no, how could you break Bubu\'s heart?</div>';
             }
-
-            bubble.style.visibility = 'visible'; // Make bubble visible
         }
 
-        function createParticles(x, y, type) {
-            for (var i = 0; i < 30; i++) {
-                var particle = document.createElement('div');
+        function createParticles(x, y, emoji) {
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
                 particle.classList.add('particle');
-                particle.style.left = x + (Math.random() - 0.5) * 100 + 'px';
-                particle.style.top = y + (Math.random() - 0.5) * 100 + 'px';
-
-                if (type === 'heart') {
-                    particle.innerHTML = '❤️';
-                    particle.classList.add('heart');
-                } else {
-                    particle.innerHTML = '❤️🔥';
-                    particle.classList.add('burning-heart');
-                }
-
+                particle.style.left = `${x + (Math.random() * 100 - 50)}px`;
+                particle.style.top = `${y + (Math.random() * 100 - 50)}px`;
+                particle.innerHTML = emoji;
                 document.body.appendChild(particle);
-
-                setTimeout(function(p) {
-                    p.remove();
-                }, 1000, particle);
+                setTimeout(() => {
+                    particle.remove();
+                }, 1000);
             }
         }
     </script>
+
 </body>
 </html>
