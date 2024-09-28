@@ -127,7 +127,6 @@
         /* Speech bubble styling */
         .speech-bubble {
             position: absolute;
-            top: -70px; /* Adjusted position for better visibility */
             left: 50%;
             transform: translateX(-50%);
             display: inline-block;
@@ -279,55 +278,54 @@
             var bubble = document.createElement('div');
             bubble.classList.add('speech-bubble');
 
+            // Calculate book position to avoid overlap
+            const bookRect = document.getElementById('book').getBoundingClientRect();
+            const bubbleOffset = 10; // Space between bubble and book
+
+            // Set the top position of the bubble
+            let bubbleTop = bookRect.top - bubble.offsetHeight - bubbleOffset;
+
             if (answer) {
                 bubble.textContent = "Yay! I love you a lot, My Fiancée! ❤️";
                 createParticles(event.clientX, event.clientY, 'heart');
             } else {
-                bubble.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
+                bubble.textContent = "Oh no! That's okay, we can still be friends! 💔";
                 createParticles(event.clientX, event.clientY, 'burning-heart');
             }
 
-            // Append the speech bubble to the response div
+            // Set position of the bubble
+            bubble.style.top = `${bubbleTop}px`;
+            bubble.style.left = `${bookRect.left + (bookRect.width / 2)}px`; // Center it above the book
             responseDiv.appendChild(bubble);
         }
 
         function createParticles(x, y, type) {
-            const particleCount = 30;
-            const particleSymbol = type === 'heart' ? "❤️" : "🔥❤️";
+            const particleCount = 30; // Number of particles to create
             for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.textContent = particleSymbol;
-                particle.style.left = `${x}px`;
-                particle.style.top = `${y}px`;
-                particle.style.fontSize = Math.random() * 15 + 10 + 'px'; // Random size
-                particle.style.opacity = Math.random(); // Random opacity
-
-                document.body.appendChild(particle);
-
-                // Set random direction for each particle
-                const direction = Math.random() * 360;
-                const distance = Math.random() * 100 + 50;
-                const xMovement = Math.cos(direction) * distance;
-                const yMovement = Math.sin(direction) * distance;
-
-                particle.animate(
-                    [
-                        { transform: `translate(0, 0)` },
-                        { transform: `translate(${xMovement}px, ${yMovement}px)` }
-                    ],
-                    {
-                        duration: 1000,
-                        easing: 'ease-out',
-                        fill: 'forwards'
-                    }
-                );
-
-                // Remove the particle after animation
-                setTimeout(() => {
-                    particle.remove();
-                }, 1000);
+                createParticle(x, y, type);
             }
+        }
+
+        function createParticle(x, y, type) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.innerHTML = type === 'heart' ? '❤️' : '🔥'; // Choose emoji based on type
+            document.body.appendChild(particle);
+
+            // Randomize particle direction and animation duration
+            const angle = Math.random() * 2 * Math.PI; // Random angle in radians
+            const distance = Math.random() * 50 + 30; // Random distance from the center
+            const duration = Math.random() * 0.5 + 0.5; // Random duration between 0.5 and 1 second
+
+            particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+            particle.style.animationDuration = `${duration}s`;
+
+            // Remove the particle after animation ends
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
         }
     </script>
 </body>
