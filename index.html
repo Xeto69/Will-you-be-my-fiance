@@ -225,8 +225,8 @@
             font-size: 20px; /* Adjust size of heart emoji */
         }
 
-        .sad {
-            font-size: 20px; /* Adjust size of sad emoji */
+        .burning-heart {
+            font-size: 20px; /* Adjust size of burning heart emoji */
         }
     </style>
 </head>
@@ -266,7 +266,7 @@
                 createHeartParticles(event.clientX, event.clientY);
             } else {
                 response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
-                createSadParticles(event.clientX, event.clientY);
+                createBurningHeartParticles(event.clientX, event.clientY);
             }
         }
 
@@ -285,11 +285,11 @@
             }
         }
 
-        function createSadParticles(x, y) {
+        function createBurningHeartParticles(x, y) {
             for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
-                particle.classList.add('particle', 'sad');
-                particle.innerHTML = "😢";
+                particle.classList.add('particle', 'burning-heart');
+                particle.innerHTML = "🔥❤️";
                 particle.style.left = `${x + Math.random() * 50 - 25}px`;
                 particle.style.top = `${y + Math.random() * 50 - 25}px`;
                 document.body.appendChild(particle);
