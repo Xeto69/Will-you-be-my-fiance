@@ -257,62 +257,61 @@
         // Toggle book opening effect
         document.getElementById("book").addEventListener("click", function() {
             this.classList.toggle("open");
-            if (!this.classList.contains("open")) {
-                clearResponse(); // Clear response when closing the book
-            }
         });
 
         document.getElementById("book").addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
                 this.classList.toggle("open");
-                if (!this.classList.contains("open")) {
-                    clearResponse(); // Clear response when closing the book
-                }
             }
         });
 
-        function clearResponse() {
-            var responseDiv = document.getElementById("response");
-            responseDiv.innerHTML = ''; // Clear previous response
-        }
-
         function loveResponse(answer, event) {
-            const responseDiv = document.getElementById("response");
-            const bubble = document.createElement("div");
-            bubble.classList.add("speech-bubble");
+            event.stopPropagation(); // Prevent click event from bubbling to the book
+            var responseDiv = document.getElementById("response");
+            var bubble = document.createElement('div');
+            bubble.classList.add('speech-bubble');
 
             if (answer) {
-                bubble.innerHTML = "Yay! I'm so happy! 💖";
+                bubble.textContent = "Yay! I love you a lot, My Fiancée! ❤️";
+                createParticles(event.clientX, event.clientY, 'heart');
             } else {
-                bubble.innerHTML = "Oh no! Why not? 😢";
+                bubble.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
+                createParticles(event.clientX, event.clientY, 'burning-heart');
             }
 
+            // Clear previous response and append the speech bubble to the response div
             responseDiv.innerHTML = ''; // Clear previous response
             responseDiv.appendChild(bubble);
-            bubble.style.visibility = 'visible'; // Show the bubble
+            bubble.style.visibility = 'visible'; // Make bubble visible
 
-            // Create particles
-            createParticles(event);
+            // Position the bubble to fit inside the book
+            bubble.style.bottom = 40px; // Adjusted bottom position
         }
 
-        function createParticles(event) {
-            const particleCount = 30; // Number of particles to create
-            const container = document.querySelector('.book-inner');
-
+        function createParticles(x, y, type) {
+            const particleCount = 30;
+            const particleSymbol = type === 'heart' ? "❤️" : "🔥❤️";
             for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle heart'; // Use heart class for particles
-                particle.style.left = `${event.clientX - container.offsetLeft}px`;
-                particle.style.top = `${event.clientY - container.offsetTop}px`;
-                particle.style.animationDelay = `${Math.random() * 0.5}s`; // Random delay for effect
-                particle.innerHTML = '❤️'; // Heart emoji for particles
-                container.appendChild(particle);
-
-                // Remove the particle after animation
-                particle.addEventListener('animationend', () => {
-                    particle.remove();
-                });
+                createParticle(x, y, particleSymbol);
             }
+        }
+
+        function createParticle(x, y, symbol) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.innerHTML = symbol;
+            document.body.appendChild(particle);
+            const randomX = Math.random() * 20 - 10; // Random horizontal offset
+            const randomDuration = Math.random() * 0.5 + 0.5; // Random duration between 0.5s and 1s
+
+            particle.style.left = ${x + randomX}px;
+            particle.style.top = ${y}px;
+            particle.style.animationDuration = ${randomDuration}s;
+
+            // Remove particle after animation
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
         }
     </script>
 </body>
