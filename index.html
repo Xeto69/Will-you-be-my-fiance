@@ -9,16 +9,17 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             background-color: #f0f0f0;
-            padding: 20px; /* Reduced padding for better mobile fit */
+            padding: 10px;
             overflow: hidden; /* Prevent scrolling when particles are generated */
+            margin: 0; /* Remove default body margin */
         }
 
         /* Book container */
         .book {
             position: relative;
-            width: 90%; /* Changed to a percentage for better responsiveness */
-            max-width: 400px; /* Set a maximum width */
-            height: 400px;
+            width: 90%; /* Responsive width */
+            max-width: 350px; /* Adjusted for mobile */
+            height: 350px; /* Adjusted for mobile */
             margin: 0 auto;
             perspective: 1500px;
             background: url('book-background.jpg') no-repeat center center;
@@ -37,7 +38,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2em;
+            font-size: 1.8em; /* Adjusted font size */
             cursor: pointer;
             transform-origin: left;
             transition: transform 1s ease-in-out;
@@ -77,10 +78,11 @@
             height: 100%;
             background-color: white;
             text-align: center;
-            padding: 20px;
+            padding: 10px; /* Adjusted padding */
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
             display: none; /* Hidden by default */
             border-radius: 0 5px 5px 0;
+            overflow: hidden; /* Prevent content overflow */
         }
 
         /* Open animation */
@@ -100,6 +102,7 @@
             position: relative;
             display: inline-block;
             animation: bounce 2s infinite;
+            max-width: 70%; /* Responsive image size */
         }
 
         /* Keyframe animation for bounce effect */
@@ -122,18 +125,19 @@
         .panda-container::after {
             content: "Will you be my Fiancée?";
             position: absolute;
-            top: -60px; /* Adjusted for better visibility */
+            top: -70px; /* Adjusted for better visibility */
             left: 50%;
             transform: translateX(-50%);
-            width: 80%; /* Adjusted width for responsiveness */
-            max-width: 200px; /* Set maximum width */
+            width: 90%; /* Adjusted width for responsiveness */
+            max-width: 220px; /* Set maximum width */
             padding: 10px;
             background-color: #ff6f6f;
             color: white;
-            font-size: 1.2em;
+            font-size: 1.2em; /* Larger font size */
             text-align: center;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10; /* Ensure bubble appears above other elements */
         }
 
         /* Add a triangle (speech bubble tail) */
@@ -150,14 +154,14 @@
 
         .button {
             font-size: 1.5em; /* Increased font size for visibility */
-            padding: 12px 24px;
-            margin: 10px;
+            padding: 10px 20px; /* Adjusted padding */
+            margin: 10px 5px; /* Reduced margin */
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
             display: inline-block; /* Make button take the width of its content */
-            width: 80%; /* Set button width for mobile */
+            width: 85%; /* Set button width for mobile */
         }
 
         .yes {
@@ -180,7 +184,7 @@
 
         #response {
             font-size: 1.5em;
-            margin-top: 20px;
+            margin-top: 10px; /* Reduced margin */
             color: #333;
         }
 
@@ -192,14 +196,11 @@
         /* Media query for mobile responsiveness */
         @media (max-width: 600px) {
             body {
-                padding: 10px; /* Reduced padding for smaller screens */
+                padding: 5px; /* Further reduced padding for smaller screens */
             }
 
-            .panda {
-                max-width: 80px; /* Reduced image size for mobile */
-            }
             .panda-container::after {
-                width: 100%; /* Adjusted width for better visibility */
+                width: 90%; /* Adjusted width for better visibility */
                 font-size: 1em; /* Adjusted font size */
             }
         }
@@ -267,23 +268,23 @@
             event.stopPropagation(); // Prevent click event from bubbling to the book
             var response = document.getElementById("response");
             if (answer) {
-                response.textContent = "Yay! I love you a lot My Fiancée! ❤️";
-                createParticles(event.clientX, event.clientY, 'heart');
+                response.textContent = "Yay! I love you a lot My Fiancée!";
+                generateParticles(event.clientX, event.clientY, 'heart'); // Generate heart particles
             } else {
-                response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
-                createParticles(event.clientX, event.clientY, 'fire');
+                response.textContent = "That's okay, I still care!";
+                generateParticles(event.clientX, event.clientY, 'fire'); // Generate fire particles
             }
         }
 
-        function createParticles(x, y, type) {
-            for (let i = 0; i < 20; i++) {
+        function generateParticles(x, y, type) {
+            for (let i = 0; i < 10; i++) {
                 const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.classList.add(type);
+                particle.classList.add('particle', type);
                 document.body.appendChild(particle);
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                // Randomize direction
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+
+                // Set random angle and distance for each particle
                 const angle = Math.random() * Math.PI * 2; // Random angle
                 const distance = Math.random() * 100; // Random distance
                 particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
