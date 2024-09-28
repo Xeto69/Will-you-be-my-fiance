@@ -148,6 +148,8 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            position: relative; /* For particle positioning */
+            overflow: hidden; /* Hide particles when they go outside */
         }
 
         .yes {
@@ -189,6 +191,43 @@
                 font-size: 1em;
             }
         }
+
+        /* Heart and Fire Particle Effects */
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0.8;
+            border-radius: 50%;
+            pointer-events: none; /* Prevent mouse events */
+            animation: rise 1s forwards, fade 1s forwards; /* Animation */
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                transform: translateY(-50px) scale(0);
+            }
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .heart {
+            background-color: red;
+        }
+
+        .fire {
+            background-color: orange;
+        }
     </style>
 </head>
 <body>
@@ -224,8 +263,31 @@
             var response = document.getElementById("response");
             if (answer) {
                 response.textContent = "Yay! I love you a lot My Fiancée! ❤️";
+                createParticles(event.clientX, event.clientY, 'heart');
             } else {
                 response.textContent = "You should say YES! because you're all mine ALWAYS. ❤️";
+                createParticles(event.clientX, event.clientY, 'fire');
+            }
+        }
+
+        function createParticles(x, y, type) {
+            for (let i = 0; i < 10; i++) { // Create 10 particles
+                const particle = document.createElement('div');
+                particle.className = 'particle ' + (type === 'heart' ? 'heart' : 'fire');
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                document.body.appendChild(particle);
+
+                // Animate the particle away from the click point
+                setTimeout(() => {
+                    particle.style.left = `${x + (Math.random() * 40 - 20)}px`; // Random X offset
+                    particle.style.top = `${y - (Math.random() * 50 + 20)}px`; // Random Y offset
+                }, 10);
+
+                // Remove particle after animation
+                setTimeout(() => {
+                    particle.remove();
+                }, 1000);
             }
         }
     </script>
