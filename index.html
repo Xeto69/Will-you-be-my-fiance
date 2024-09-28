@@ -81,7 +81,7 @@
             height: 120%;
             background-color: white;
             text-align: center;
-            padding: 15px; /* Adjusted padding */
+            padding: 15px;
             display: none; /* Hidden by default */
             border-radius: 0 5px 5px 0;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -250,7 +250,7 @@
                 <h2>Will you be My Fiancée?</h2>
                 <!-- Panda Container with the panda image -->
                 <div class="panda-container">
-                    <img src="Bubu.png" alt="Panda Bubu image" class="panda">
+                    <img src="Bubu.png" alt="Panda Bubu image" class="panda" />
                 </div>
 
                 <div>
@@ -260,7 +260,7 @@
             </div>
 
             <!-- Speech bubble -->
-            <div id="response" class="speech-bubble"></div>
+            <div id="response" class="speech-bubble" role="alert"></div>
         </div>
     </div>
 
@@ -279,12 +279,35 @@
 
             if (answer) {
                 bubble.textContent = "Yay! I love you too a lot, My Fiancée!";
+                // Display hearts
+                for (let i = 0; i < 5; i++) {
+                    createParticle(event.clientX, event.clientY);
+                }
             } else {
-                bubble.textContent = "Won't agree with that. Say YES because you're all just mine forever!";
+                bubble.textContent = "Oh... That's okay. Maybe someday!";
             }
-            bubble.style.visibility = "visible"; // Show the speech bubble
-        }
-    </script>
 
+            bubble.style.visibility = 'visible'; // Show the speech bubble
+        }
+
+        // Function to create particle effect
+        function createParticle(x, y) {
+            const particle = document.createElement("span");
+            particle.className = 'particle heart';
+            particle.innerHTML = '❤️';
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            document.body.appendChild(particle);
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
+        }
+
+        // Close speech bubble after 3 seconds
+        const bubble = document.getElementById("response");
+        setInterval(() => {
+            bubble.style.visibility = 'hidden'; // Hide bubble
+        }, 3000);
+    </script>
 </body>
 </html>
