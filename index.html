@@ -81,7 +81,7 @@
             height: 100%;
             background-color: white;
             text-align: center;
-            padding: 30px;
+            padding: 15px; /* Reduced padding to move contents up */
             display: none; /* Hidden by default */
             border-radius: 0 5px 5px 0;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -196,7 +196,7 @@
                 max-width: 90%;
             }
             .book-inner {
-                padding: 20px; /* Adjust padding for smaller screens */
+                padding: 10px; /* Further adjust padding for smaller screens */
             }
             .panda {
                 max-width: 80%; /* Adjust panda size */
@@ -289,9 +289,31 @@
             }
             bubble.style.visibility = 'visible'; // Make the bubble visible
             setTimeout(() => {
-                bubble.style.visibility = 'hidden'; // Hide the bubble after 3 seconds
-            }, 3000);
+                bubble.style.visibility = 'hidden'; // Hide after 5 seconds
+            }, 5000);
         }
+
+        // Particle effect
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle heart'; // Add heart class for heart emoji
+            particle.innerHTML = '❤️'; // Heart emoji
+
+            // Randomize initial position
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.bottom = '0px';
+            document.body.appendChild(particle);
+
+            // Animation
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
+        }
+
+        // Create particles on clicking yes button
+        document.querySelector('.yes').addEventListener('click', function() {
+            createParticle();
+        });
     </script>
 </body>
 </html>
